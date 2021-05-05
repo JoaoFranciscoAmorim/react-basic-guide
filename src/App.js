@@ -1,5 +1,9 @@
+import React, { useState } from 'react';
 import ExpenseItem from "./components/ExpenseItem";
 import NewExpense from './components/NewExpense/NewExpense';
+import ExpensesFilter from './components/ExpensesFilter';
+import './components/ExpensesFilter.css';
+
 function App() {
   const expenses = [
     {
@@ -22,10 +26,19 @@ function App() {
       date: new Date(2021, 5, 12),
     },
   ];
-
+  function addExpenseHandler(expense) {
+    console.log('In App.js')
+    console.log(expense)
+  }
+  const [filteredYear, setFilteredYear] = useState('2020')
+  function filterChangeHandler(selectedYear) {
+    setFilteredYear(selectedYear)
+  }
   return (
     <div>
-      <NewExpense></NewExpense>
+    <div>
+      <NewExpense onAddExpense={addExpenseHandler}></NewExpense>
+      <ExpensesFilter selected={filteredYear} onChangeFilter={filterChangeHandler}></ExpensesFilter>
       <ExpenseItem
           title={expenses[0].title}
           amount={expenses[0].amount}
@@ -47,10 +60,11 @@ function App() {
           date={expenses[3].date}
         ></ExpenseItem>
       </div>
-   
+   </div>
   );
 }
+
+export default App;
 /*tags de html, como div, começam com minuscula, e tags customizadas, como ExpenseItem, começam com maiuscula.
 Shift+alt+F formata o codigo para ficar mais facil de ler.
 npm start para ver no chrome.*/
-export default App;
